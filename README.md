@@ -1,7 +1,7 @@
 #基于bboss es spring boot starter的maven工程
-本实例是一个基于bboss es spring boot starter的demo maven工程，可供spring boot项目集成参考
+本实例是一个基于bboss es spring boot starter的demo maven工程，可供spring boot项目集成bboss elasticsearch rest client参考
 
-本demo展示了通过spring boot管理单集群功能和管理多集群功能
+展示了通过spring boot管理单集群功能和管理多集群功能
 
 单集群测试用例：eshelloword-spring-boot-starter\src\test\java\org\bboss\elasticsearchtest\springboot\BBossESStarterTestCase.java
 
