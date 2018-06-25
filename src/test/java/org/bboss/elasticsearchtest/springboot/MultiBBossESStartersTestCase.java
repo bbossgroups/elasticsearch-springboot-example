@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * spring.elasticsearch.bboss.default 默认es集群
  * spring.elasticsearch.bboss.logs  logs es集群
  * 两个集群通过 org.bboss.elasticsearchtest.springboot.MultiESSTartConfigurer加载
- * 对应的配置文件为application.properties文件
+ * 对应的配置文件为application-multi-datasource.properties文件
  * @author yinbp [122054810@qq.com]
  */
 @RunWith(SpringRunner.class)
