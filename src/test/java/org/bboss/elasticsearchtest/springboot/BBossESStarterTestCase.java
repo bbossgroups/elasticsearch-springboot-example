@@ -16,10 +16,10 @@
 package org.bboss.elasticsearchtest.springboot;
 
 
-import org.frameworkset.elasticsearch.ElasticSearchHelper;
 import org.frameworkset.elasticsearch.client.ClientInterface;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -31,22 +31,24 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 public class BBossESStarterTestCase {
+	@Autowired
+	private ClientInterface restClient;
 
     @Test
     public void testBbossESStarter() throws Exception {
 //        System.out.println(bbossESStarter);
-		ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
+
 		//验证环境,获取es状态
-		String response = clientUtil.executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
+		String response = restClient.executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
 
 		System.out.println(response);
 		//判断索引类型是否存在，false表示不存在，正常返回true表示存在
-		boolean exist = clientUtil.existIndiceType("twitter","tweet");
+		boolean exist = restClient.existIndiceType("twitter","tweet");
 
 		//判读索引是否存在，false表示不存在，正常返回true表示存在
-		exist = clientUtil.existIndice("twitter");
+		exist = restClient.existIndice("twitter");
 
-		exist = clientUtil.existIndice("agentinfo");
+		exist = restClient.existIndice("agentinfo");
 
     }
 

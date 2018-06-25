@@ -16,10 +16,10 @@
 package org.bboss.elasticsearchtest.springboot;
 
 
-import org.frameworkset.elasticsearch.ElasticSearchHelper;
 import org.frameworkset.elasticsearch.client.ClientInterface;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -36,27 +36,25 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = Application.class)
 @ActiveProfiles("multi-datasource")
 public class MultiBBossESStartersTestCase {
-//
-//    @Autowired
-//    BBossESStarter bbossESStarter;
+	@Autowired
+	private ClientInterface restClient;
+	@Autowired
+	private ClientInterface restClientLogs;
     @Test
     public void testMultiBBossESStarters() throws Exception {
-//        System.out.println(bbossESStarter);
-		ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
 
 		//验证环境,获取es状态
-		String response = clientUtil.executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
+		String response = restClient.executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
 		System.out.println(response);
-		ClientInterface logsClientUtil = ElasticSearchHelper.getRestClientUtil("logs");
 
 
 		//判断索引类型是否存在，false表示不存在，正常返回true表示存在
-		boolean exist = logsClientUtil.existIndiceType("twitter","tweet");
+		boolean exist = restClientLogs.existIndiceType("twitter","tweet");
 		System.out.println("twitter/tweet:"+exist);
 		//判读索引是否存在，false表示不存在，正常返回true表示存在
-		exist = logsClientUtil.existIndice("twitter");
+		exist = restClientLogs.existIndice("twitter");
 		System.out.println("twitter:"+exist);
-		exist = logsClientUtil.existIndice("agentinfo");
+		exist = restClientLogs.existIndice("agentinfo");
 		System.out.println("agentinfo:"+exist);
     }
 

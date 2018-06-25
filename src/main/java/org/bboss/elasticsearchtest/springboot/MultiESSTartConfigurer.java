@@ -15,7 +15,9 @@ package org.bboss.elasticsearchtest.springboot;
  *  limitations under the License.
  */
 
+import org.frameworkset.elasticsearch.ElasticSearchHelper;
 import org.frameworkset.elasticsearch.boot.BBossESStarter;
+import org.frameworkset.elasticsearch.client.ClientInterface;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,5 +44,12 @@ public class MultiESSTartConfigurer {
 		return new BBossESStarter();
 
 	}
+
+	@Bean
+	public ClientInterface restClientLogs(){
+		return  ElasticSearchHelper.getRestClientUtil("logs");
+	}
+
+
 
 }
