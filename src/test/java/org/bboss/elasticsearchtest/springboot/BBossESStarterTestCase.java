@@ -34,6 +34,9 @@ public class BBossESStarterTestCase {
 	@Autowired
 	private ClientInterface restClient;
 
+	@Autowired
+	private ClientInterface restConfigClient;
+
     @Test
     public void testBbossESStarter() throws Exception {
 //        System.out.println(bbossESStarter);

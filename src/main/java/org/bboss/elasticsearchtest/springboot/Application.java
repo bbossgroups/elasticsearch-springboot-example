@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 
 /**
  *  @author yinbp [122054810@qq.com]
- * EnableAutoConfiguration 启注解事务管理，等同于xml配置方式的 <tx:annotation-driven />
+ *
  */
 
 @SpringBootApplication
@@ -19,12 +19,15 @@ import org.springframework.context.annotation.Bean;
 public class Application {
 
     private Logger logger = LoggerFactory.getLogger(Application.class);
-//
-//	@Autowired
-//	private BBossESStarter bbossESStarter;
+ 
     @Bean
     public ClientInterface restClient(){
         return  ElasticSearchHelper.getRestClientUtil();
+    }
+
+    @Bean
+    public ClientInterface restConfigClient(){
+        return  ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
     }
     public static void main(String[] args) {
 
