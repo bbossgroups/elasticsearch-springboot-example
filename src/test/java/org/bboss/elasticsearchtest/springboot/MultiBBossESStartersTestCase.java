@@ -37,24 +37,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ActiveProfiles("multi-datasource")
 public class MultiBBossESStartersTestCase {
 	@Autowired
-	private ClientInterface restClient;
-	@Autowired
-	private ClientInterface restClientLogs;
+	private ServiceApiUtil serviceApiUtil;
+
     @Test
     public void testMultiBBossESStarters() throws Exception {
 
 		//验证环境,获取es状态
-		String response = restClient.executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
+		String response = serviceApiUtil.restClient().executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
 		System.out.println(response);
 
 
 		//判断索引类型是否存在，false表示不存在，正常返回true表示存在
-		boolean exist = restClientLogs.existIndiceType("twitter","tweet");
+		boolean exist = serviceApiUtil.restClientLogs().existIndiceType("twitter","tweet");
 		System.out.println("twitter/tweet:"+exist);
 		//判读索引是否存在，false表示不存在，正常返回true表示存在
-		exist = restClientLogs.existIndice("twitter");
+		exist = serviceApiUtil.restClientLogs().existIndice("twitter");
 		System.out.println("twitter:"+exist);
-		exist = restClientLogs.existIndice("agentinfo");
+		exist = serviceApiUtil.restClientLogs().existIndice("agentinfo");
 		System.out.println("agentinfo:"+exist);
     }
 
