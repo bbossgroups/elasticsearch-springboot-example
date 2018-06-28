@@ -40,11 +40,5 @@ public class MultiESSTartConfigurer {
 	@ConfigurationProperties("spring.elasticsearch.bboss.logs")
 	public BBossESStarter bbossESStarterLogs(){
 		return new BBossESStarter();
-
 	}
-
-
-
-
-
 }
