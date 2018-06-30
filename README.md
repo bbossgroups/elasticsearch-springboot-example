@@ -15,20 +15,14 @@
  * 对应的配置文件为application-multi-datasource.properties文件
 
 # spring boot工程集成说明
-## 在spring boot工程中导入以下坐标：
+## 快速集成和应用 
+非spring boot项目：
+https://my.oschina.net/bboss/blog/1801273 
 
-maven坐标
-```
-<dependency>
-    <groupId>com.bbossgroups.plugins</groupId>
-    <artifactId>bboss-elasticsearch-spring-boot-starter</artifactId>
-    <version>5.0.7.7</version>
-</dependency>
-```
-gradle坐标
-```
-compile "com.bbossgroups.plugins:bboss-elasticsearch-spring-boot-starter:5.0.7.7"
-```
+spring boot项目：
+https://my.oschina.net/bboss/blog/1835601
+
+
 ## 在spring booter项目中配置es参数
 单es集群配置，修改spring booter项目的配置文件：eshelloword-spring-boot-starter\src\main\resources\application.properties
 
