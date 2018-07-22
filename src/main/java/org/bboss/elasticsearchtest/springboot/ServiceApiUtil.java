@@ -25,35 +25,50 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceApiUtil {
 
-
+	private ClientInterface restClient;
+	private ClientInterface restDemoConfigClient;
+	private ClientInterface restClientLogs;
+	private ClientInterface restConfigClientLogs;
 	/**
 	 * 获取操作默认的es集群的客户端工具组件
 	 * @return
 	 */
+
 	public ClientInterface restClient(){
-		return  ElasticSearchHelper.getRestClientUtil();
+		if(restClient == null)
+			restClient =ElasticSearchHelper.getRestClientUtil();
+		return restClient;
 	}
 
 	/**
 	 * 获取操作默认的es集群的加载dsl配置文件的客户端工具组件
 	 * @return
 	 */
+
 	public ClientInterface restDemoConfigClient(){
-		return  ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
+		if(restDemoConfigClient == null)
+			restDemoConfigClient =  ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
+		return restDemoConfigClient;
 	}
 
 	/**
 	 * 获取操作logs的es集群的客户端工具组件
 	 * @return
 	 */
+
 	public ClientInterface restClientLogs(){
-		return  ElasticSearchHelper.getRestClientUtil("logs");
+		if(restClientLogs == null)
+			restClientLogs =  ElasticSearchHelper.getRestClientUtil("logs");
+		return restClientLogs;
 	}
 	/**
 	 * 获取操作logs的es集群的加载dsl配置文件的客户端工具组件
 	 * @return
 	 */
+
 	public ClientInterface restConfigClientLogs(){
-		return  ElasticSearchHelper.getConfigRestClientUtil("logs","esmapper/demo.xml");
+		if(restConfigClientLogs == null)
+			restConfigClientLogs = ElasticSearchHelper.getConfigRestClientUtil("logs","esmapper/demo.xml");
+		return restConfigClientLogs;
 	}
 }
