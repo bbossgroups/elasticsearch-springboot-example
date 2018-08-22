@@ -16,7 +16,7 @@
 package org.bboss.elasticsearchtest.springboot;
 
 
-import org.frameworkset.elasticsearch.client.ClientInterface;
+import org.bboss.elasticsearchtest.springboot.crud.DocumentCRUD;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +40,9 @@ public class BBossESStarterTestCase {
 //        System.out.println(bbossESStarter);
 
 		//验证环境,获取es状态
-		String response = serviceApiUtil.restClient().executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
+//		String response = serviceApiUtil.restClient().executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
 
-		System.out.println(response);
+//		System.out.println(response);
 		//判断索引类型是否存在，false表示不存在，正常返回true表示存在
 		boolean exist = serviceApiUtil.restClient().existIndiceType("twitter","tweet");
 
@@ -52,6 +52,34 @@ public class BBossESStarterTestCase {
 		exist = serviceApiUtil.restClient().existIndice("agentinfo");
 
     }
+
+    @Test
+	public void testCRUD() throws Exception {
+		DocumentCRUD documentCRUD = new DocumentCRUD(serviceApiUtil);
+		//删除/创建文档索引表
+		documentCRUD.testCreateIndice();
+		//添加/修改单个文档
+
+		documentCRUD.testAddAndUpdateDocument();
+		//批量添加文档
+		documentCRUD.testBulkAddDocument();
+		//检索文档
+		documentCRUD.testSearch();
+		//批量修改文档
+		documentCRUD.testBulkUpdateDocument();
+
+		//检索批量修改后的文档
+		documentCRUD.testSearch();
+		//带list复杂参数的文档检索操作
+		documentCRUD.testSearchArray();
+		//带from/size分页操作的文档检索操作
+		documentCRUD.testPagineSearch();
+		//带sourcefilter的文档检索操作
+		documentCRUD.testSearchSourceFilter();
+
+		documentCRUD.updateDemoIndice();
+		documentCRUD.testBulkAddDocuments();
+	}
 
 
 }

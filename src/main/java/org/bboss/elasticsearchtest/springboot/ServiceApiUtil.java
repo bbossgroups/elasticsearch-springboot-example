@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceApiUtil {
-
+	private String mappath = "esmapper/demo.xml";
 	private ClientInterface restClient;
 	private ClientInterface restDemoConfigClient;
 	private ClientInterface restClientLogs;
@@ -47,7 +47,7 @@ public class ServiceApiUtil {
 
 	public ClientInterface restDemoConfigClient(){
 		if(restDemoConfigClient == null)
-			restDemoConfigClient =  ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
+			restDemoConfigClient =  ElasticSearchHelper.getConfigRestClientUtil(mappath);
 		return restDemoConfigClient;
 	}
 
@@ -68,7 +68,7 @@ public class ServiceApiUtil {
 
 	public ClientInterface restConfigClientLogs(){
 		if(restConfigClientLogs == null)
-			restConfigClientLogs = ElasticSearchHelper.getConfigRestClientUtil("logs","esmapper/demo.xml");
+			restConfigClientLogs = ElasticSearchHelper.getConfigRestClientUtil("logs",mappath);
 		return restConfigClientLogs;
 	}
 }
