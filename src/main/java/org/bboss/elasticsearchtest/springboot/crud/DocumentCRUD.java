@@ -325,7 +325,7 @@ public class DocumentCRUD {
 		long count = clientUtil.countAll("demo");
 		end = System.currentTimeMillis();
 		System.out.println("countAll Documents elapsed:"+(end - start)+"毫秒");
-		System.out.println("addDocuments-------------------------" +count);
+		//System.out.println("addDocuments-------------------------" +count);
 		//System.out.println(response);
 		//获取第一个文档.
 		start = System.currentTimeMillis();
@@ -334,7 +334,7 @@ public class DocumentCRUD {
 				"2");//w
 		end = System.currentTimeMillis();
 		System.out.println("getDocument Json elapsed:"+(end - start)+"毫秒");
-		System.out.println("getDocument-------------------------");
+		//System.out.println("getDocument-------------------------");
 		//System.out.println(response);
 		//获取第二个文档
 		start = System.currentTimeMillis();
