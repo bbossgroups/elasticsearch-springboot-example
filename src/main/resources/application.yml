@@ -1,11 +1,11 @@
 spring:
   elasticsearch:
     bboss:
-      elasticUser:
-      elasticPassword:
+      elasticUser: elastic
+      elasticPassword: changeme
       elasticsearch:
         rest:
-          hostNames: 192.168.1.101:9200,192.168.1.102:9200
+          hostNames: 192.168.8.25:9200
         dateFormat: yyyy.MM.dd
         timeZone: Asia/Shanghai
         ttl: 2d
@@ -26,4 +26,17 @@ spring:
          soKeepAlive: false
          timeToLive: 3600000
          keepAlive: 3600000
+         keystore:
+         keyPassword:
+         hostnameVerifier:
+      db:
+         name: test
+         user: root
+         password: 123456
+         driver: com.mysql.jdbc.Driver
+         url: jdbc:mysql://localhost:3306/bboss
+         usePool: true
+         validateSQL: select 1
+
+
 
