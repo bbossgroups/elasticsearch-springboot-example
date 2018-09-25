@@ -24,9 +24,17 @@ https://my.oschina.net/bboss/blog/1835601
 
 
 ## 在spring booter项目中配置es参数
-单es集群配置，修改spring booter项目的配置文件：eshelloword-spring-boot-starter\src\main\resources\application.properties
+yml配置(默认配置)
+单es集群配置，修改spring booter项目的配置文件：eshelloword-spring-boot-starter\src\main\resources\application.yml
 
-多es集群配置，修改spring booter项目的配置文件：eshelloword-spring-boot-starter\src\main\resources\application-multi-datasource.properties
+多es集群配置，修改spring booter项目的配置文件：eshelloword-spring-boot-starter\src\main\resources\application-multi-datasource.yml
+
+properties配置：如果需要采用properties配置，则将下面的两个文件拷贝到resources目录下面，把后缀.example去掉即可，记住yml和properties只能保留一个
+
+单es集群配置，修改spring booter项目的配置文件：eshelloword-spring-boot-starter\src\main\resources\config\application.properties.example
+
+多es集群配置，修改spring booter项目的配置文件：eshelloword-spring-boot-starter\src\main\resources\config\application-multi-datasource.properties.example
+
    
 ## 2.3 参考文档
 https://my.oschina.net/bboss/blog/1556866

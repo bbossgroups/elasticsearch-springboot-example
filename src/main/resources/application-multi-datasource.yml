@@ -1,0 +1,66 @@
+spring:
+  elasticsearch:
+    bboss:
+      default:
+        name: default
+        elasticUser: elastic
+        elasticPassword: changeme
+        elasticsearch:
+          rest:
+            hostNames: 127.0.0.1:9200
+          dateFormat: yyyy.MM.dd
+          timeZone: Asia/Shanghai
+          ttl: 2d
+          showTemplate: true
+          discoverHost: false
+        dslfile:
+          refreshInterval: -1
+        http:
+           timeoutConnection: 400000
+           timeoutSocket: 400000
+           connectionRequestTimeout: 400000
+           retryTime: 1
+           maxLineLength: -1
+           maxHeaderCount: 200
+           maxTotal: 400
+           defaultMaxPerRoute: 200
+           soReuseAddress: false
+           soKeepAlive: false
+           timeToLive: 3600000
+           keepAlive: 3600000
+           keystore:
+           keyPassword:
+           hostnameVerifier:
+      logs:
+          name: logs
+          elasticUser: elastic
+          elasticPassword: changeme
+          elasticsearch:
+            rest:
+              hostNames: 127.0.0.1:9200
+            dateFormat: yyyy.MM.dd
+            timeZone: Asia/Shanghai
+            ttl: 2d
+            showTemplate: true
+            discoverHost: false
+          dslfile:
+            refreshInterval: -1
+          http:
+             timeoutConnection: 400000
+             timeoutSocket: 400000
+             connectionRequestTimeout: 400000
+             retryTime: 1
+             maxLineLength: -1
+             maxHeaderCount: 200
+             maxTotal: 400
+             defaultMaxPerRoute: 200
+             soReuseAddress: false
+             soKeepAlive: false
+             timeToLive: 3600000
+             keepAlive: 3600000
+             keystore:
+             keyPassword:
+             hostnameVerifier:
+
+
+
