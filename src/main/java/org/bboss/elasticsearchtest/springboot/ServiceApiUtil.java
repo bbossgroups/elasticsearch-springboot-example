@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceApiUtil {
+
 	private String mappath = "esmapper/demo.xml";
 	private ClientInterface restClient;
 	private ClientInterface restDemoConfigClient;
