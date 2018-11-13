@@ -81,5 +81,13 @@ public class BBossESStarterTestCase {
 		documentCRUD.testBulkAddDocuments();
 	}
 
+	@Test
+	public void testPerformaceCRUD() throws Exception {
+		DocumentCRUD documentCRUD = new DocumentCRUD(serviceApiUtil);
+		//删除/创建文档索引表
+		documentCRUD.testCreateIndice();
+
+		documentCRUD.testBulkAddDocuments();
+	}
 
 }
