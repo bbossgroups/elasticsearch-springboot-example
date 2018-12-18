@@ -65,7 +65,7 @@ spring:
              keyPassword:
              hostnameVerifier:
              validateAfterInactivity: 5000
-             staleConnectionCheckEnabled: true
+             staleConnectionCheckEnabled: false
              customHttpRequestRetryHandler: org.frameworkset.spi.remote.http.DefaultHttpRequestRetryHandler
 
 
