@@ -5,7 +5,7 @@ spring:
       elasticPassword: changeme
       elasticsearch:
         rest:
-          hostNames: 192.168.8.25:9200
+          hostNames: 192.168.137.1:9200
         dateFormat: yyyy.MM.dd
         timeZone: Asia/Shanghai
         ttl: 2d
@@ -29,6 +29,9 @@ spring:
          keystore:
          keyPassword:
          hostnameVerifier:
+         validateAfterInactivity: 2000
+         staleConnectionCheckEnabled: false
+         customHttpRequestRetryHandler: org.frameworkset.spi.remote.http.ConnectionResetHttpRequestRetryHandler
       db:
          name: test
          user: root
