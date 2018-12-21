@@ -16,7 +16,7 @@
 package org.bboss.elasticsearchtest.springboot;
 
 
-import org.bboss.elasticsearchtest.springboot.crud.DocumentCRUD;
+import org.bboss.elasticsearchtest.springboot.crud.MultiESDocumentCRUD;
 import org.frameworkset.elasticsearch.boot.BBossESStarter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +40,7 @@ public class MultiBBossESStartersTestCase {
 	@Autowired
 	private BBossESStarter bbossESStarterDefault;
 	@Autowired
-	DocumentCRUD multiESDocumentCRUD;
+	MultiESDocumentCRUD multiESDocumentCRUD;
     @Test
     public void testMultiBBossESStarters() throws Exception {
 
@@ -52,11 +52,13 @@ public class MultiBBossESStartersTestCase {
 		//判断索引类型是否存在，false表示不存在，正常返回true表示存在
 		boolean exist = bbossESStarterDefault.getRestClient().existIndiceType("twitter","tweet");
 		System.out.println("default twitter/tweet:"+exist);
+		//获取logs对应的Elasticsearch集群客户端，并进行existIndiceType操作
 		exist = bbossESStarterDefault.getRestClient("logs").existIndiceType("twitter","tweet");
 		System.out.println("logs twitter/tweet:"+exist);
-		//判读索引是否存在，false表示不存在，正常返回true表示存在
+		//获取logs对应的Elasticsearch集群客户端，判读索引是否存在，false表示不存在，正常返回true表示存在
 		exist = bbossESStarterDefault.getRestClient("logs").existIndice("twitter");
 		System.out.println("logs  twitter:"+exist);
+		//获取logs对应的Elasticsearch集群客户端，判断索引是否定义
 		exist = bbossESStarterDefault.getRestClient("logs").existIndice("agentinfo");
 		System.out.println("logs agentinfo:"+exist);
     }
@@ -97,6 +99,4 @@ public class MultiBBossESStartersTestCase {
 
 		multiESDocumentCRUD.testBulkAddDocuments();
 	}
-
-
 }
