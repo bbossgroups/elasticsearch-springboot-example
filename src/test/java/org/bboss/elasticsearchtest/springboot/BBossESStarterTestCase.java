@@ -17,6 +17,7 @@ package org.bboss.elasticsearchtest.springboot;
 
 
 import org.bboss.elasticsearchtest.springboot.crud.DocumentCRUD;
+import org.frameworkset.elasticsearch.boot.BBossESStarter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = Application.class)
 public class BBossESStarterTestCase {
 	@Autowired
-	private ServiceApiUtil serviceApiUtil;
-
+	private BBossESStarter bbossESStarter;
+	@Autowired
+	DocumentCRUD documentCRUD;
 
     @Test
     public void testBbossESStarter() throws Exception {
@@ -44,18 +46,18 @@ public class BBossESStarterTestCase {
 
 //		System.out.println(response);
 		//判断索引类型是否存在，false表示不存在，正常返回true表示存在
-		boolean exist = serviceApiUtil.restClient().existIndiceType("twitter","tweet");
+		boolean exist = bbossESStarter.getRestClient().existIndiceType("twitter","tweet");
 
 		//判读索引是否存在，false表示不存在，正常返回true表示存在
-		exist = serviceApiUtil.restClient().existIndice("twitter");
+		exist =  bbossESStarter.getRestClient().existIndice("twitter");
 
-		exist = serviceApiUtil.restClient().existIndice("agentinfo");
+		exist =  bbossESStarter.getRestClient().existIndice("agentinfo");
 
     }
 
     @Test
 	public void testCRUD() throws Exception {
-		DocumentCRUD documentCRUD = new DocumentCRUD(serviceApiUtil);
+
 		//删除/创建文档索引表
 		documentCRUD.testCreateIndice();
 		//添加/修改单个文档
@@ -83,7 +85,7 @@ public class BBossESStarterTestCase {
 
 	@Test
 	public void testPerformaceCRUD() throws Exception {
-		DocumentCRUD documentCRUD = new DocumentCRUD(serviceApiUtil);
+
 		//删除/创建文档索引表
 		documentCRUD.testCreateIndice();
 

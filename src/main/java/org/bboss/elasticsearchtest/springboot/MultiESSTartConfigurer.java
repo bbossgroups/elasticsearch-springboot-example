@@ -20,13 +20,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
 
 /**
  * 配置多个es集群
  */
+//@Configuration
+//@Profile("multi-datasource")
 @Configuration
-@Profile("multi-datasource")
 public class MultiESSTartConfigurer {
 	@Primary
 	@Bean(initMethod = "start")

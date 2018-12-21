@@ -16,7 +16,8 @@
 package org.bboss.elasticsearchtest.springboot;
 
 
-import org.frameworkset.elasticsearch.client.ClientInterface;
+import org.bboss.elasticsearchtest.springboot.crud.DocumentCRUD;
+import org.frameworkset.elasticsearch.boot.BBossESStarter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,25 +38,65 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ActiveProfiles("multi-datasource")
 public class MultiBBossESStartersTestCase {
 	@Autowired
-	private ServiceApiUtil serviceApiUtil;
-
+	private BBossESStarter bbossESStarterDefault;
+	@Autowired
+	DocumentCRUD multiESDocumentCRUD;
     @Test
     public void testMultiBBossESStarters() throws Exception {
 
 		//验证环境,获取es状态
-		String response = serviceApiUtil.restClient().executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
-		System.out.println(response);
+//		String response = bbossESStarterDefault.getRestClient().executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
+//		System.out.println(response);
 
 
 		//判断索引类型是否存在，false表示不存在，正常返回true表示存在
-		boolean exist = serviceApiUtil.restClientLogs().existIndiceType("twitter","tweet");
-		System.out.println("twitter/tweet:"+exist);
+		boolean exist = bbossESStarterDefault.getRestClient().existIndiceType("twitter","tweet");
+		System.out.println("default twitter/tweet:"+exist);
+		exist = bbossESStarterDefault.getRestClient("logs").existIndiceType("twitter","tweet");
+		System.out.println("logs twitter/tweet:"+exist);
 		//判读索引是否存在，false表示不存在，正常返回true表示存在
-		exist = serviceApiUtil.restClientLogs().existIndice("twitter");
-		System.out.println("twitter:"+exist);
-		exist = serviceApiUtil.restClientLogs().existIndice("agentinfo");
-		System.out.println("agentinfo:"+exist);
+		exist = bbossESStarterDefault.getRestClient("logs").existIndice("twitter");
+		System.out.println("logs  twitter:"+exist);
+		exist = bbossESStarterDefault.getRestClient("logs").existIndice("agentinfo");
+		System.out.println("logs agentinfo:"+exist);
     }
+
+	@Test
+	public void testCRUD() throws Exception {
+
+		//删除/创建文档索引表
+		multiESDocumentCRUD.testCreateIndice();
+		//添加/修改单个文档
+
+		multiESDocumentCRUD.testAddAndUpdateDocument();
+		//批量添加文档
+		multiESDocumentCRUD.testBulkAddDocument();
+		//检索文档
+		multiESDocumentCRUD.testSearch();
+		//批量修改文档
+		multiESDocumentCRUD.testBulkUpdateDocument();
+
+		//检索批量修改后的文档
+		multiESDocumentCRUD.testSearch();
+		//带list复杂参数的文档检索操作
+		multiESDocumentCRUD.testSearchArray();
+		//带from/size分页操作的文档检索操作
+		multiESDocumentCRUD.testPagineSearch();
+		//带sourcefilter的文档检索操作
+		multiESDocumentCRUD.testSearchSourceFilter();
+
+		multiESDocumentCRUD.updateDemoIndice();
+		multiESDocumentCRUD.testBulkAddDocuments();
+	}
+
+	@Test
+	public void testPerformaceCRUD() throws Exception {
+
+		//删除/创建文档索引表
+		multiESDocumentCRUD.testCreateIndice();
+
+		multiESDocumentCRUD.testBulkAddDocuments();
+	}
 
 
 }

@@ -12,7 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
-
+//改变自动扫描的包
+//@ComponentScan(basePackages = {"org.bboss.elasticsearchtest.springboot",
+//        "org.frameworkset.elasticsearch.boot"})
 public class Application {
 
     private Logger logger = LoggerFactory.getLogger(Application.class);
