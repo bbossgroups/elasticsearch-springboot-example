@@ -4,10 +4,10 @@ spring.elasticsearch.bboss.default.name = default
 spring.elasticsearch.bboss.default.elasticUser=elastic
 spring.elasticsearch.bboss.default.elasticPassword=changeme
 
-#elasticsearch.rest.hostNames=10.1.236.88:9200
-#elasticsearch.rest.hostNames=127.0.0.1:9200
 spring.elasticsearch.bboss.default.elasticsearch.rest.hostNames=10.21.20.168:9200
-#elasticsearch.rest.hostNames=10.180.211.27:9280,10.180.211.27:9281,10.180.211.27:9282
+#spring.elasticsearch.bboss.default.elasticsearch.rest.hostNames=10.180.211.27:9280,10.180.211.27:9281,10.180.211.27:9282
+##https配置
+#spring.elasticsearch.bboss.default.elasticsearch.rest.hostNames=https://10.180.211.27:9280,https://10.180.211.27:9281,https://10.180.211.27:9282
 spring.elasticsearch.bboss.default.elasticsearch.dateFormat=yyyy.MM.dd
 spring.elasticsearch.bboss.default.elasticsearch.timeZone=Asia/Shanghai
 spring.elasticsearch.bboss.default.elasticsearch.ttl=2d
