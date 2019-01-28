@@ -7,7 +7,7 @@ JDK requirement: JDK 1.7+
 Elasticsearch version requirements: 2. X,5. X,6. X,+
 
 Spring booter 1.x,2.x,+
-#基于bboss es spring boot starter的maven工程
+# 基于bboss es spring boot starter的maven工程
 本实例是一个基于bboss es spring boot starter的demo maven工程，可供spring boot项目集成bboss elasticsearch rest client参考
 
 展示了通过spring boot管理单集群功能和管理多集群功能
