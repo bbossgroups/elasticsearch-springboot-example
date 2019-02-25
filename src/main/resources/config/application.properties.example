@@ -16,6 +16,17 @@ spring.elasticsearch.bboss.elasticsearch.discoverHost=false
 # dsl配置文件热加载扫描时间间隔，毫秒为单位，默认5秒扫描一次，<= 0时关闭扫描机制
 spring.elasticsearch.bboss.dslfile.refreshInterval = -1
 
+
+#设置slice scroll查询对应的线程数和等待队列数
+spring.elasticsearch.bboss.elasticsearch.sliceScrollThreadCount=100
+spring.elasticsearch.bboss.elasticsearch.sliceScrollThreadQueue=100
+spring.elasticsearch.bboss.elasticsearch.sliceScrollBlockedWaitTimeout=0
+
+#设置scroll查询对应的线程数和等待队列数
+spring.elasticsearch.bboss.elasticsearch.scrollThreadCount=200
+spring.elasticsearch.bboss.elasticsearch.scrollThreadQueue=200
+spring.elasticsearch.bboss.elasticsearch.scrollBlockedWaitTimeout=0
+
 ##es client http连接池配置
 spring.elasticsearch.bboss.http.timeoutConnection = 5000
 spring.elasticsearch.bboss.http.timeoutSocket = 5000
