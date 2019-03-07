@@ -18,6 +18,7 @@ package org.bboss.elasticsearchtest.springboot;
 
 import org.bboss.elasticsearchtest.springboot.crud.DocumentCRUD;
 import org.frameworkset.elasticsearch.boot.BBossESStarter;
+import org.frameworkset.elasticsearch.client.ClientInterface;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,17 @@ public class BBossESStarterTestCase {
 		exist =  bbossESStarter.getRestClient().existIndice("agentinfo");
 
     }
+
+	@Test
+	public void testESSQLTranslate(){
+		ClientInterface clientUtil = bbossESStarter.getRestClient();
+		String dsl =  //将sql转换为dsl
+				clientUtil.executeHttp("/_sql/_explain",//sql请求
+						"select operModule.keyword from dbdemo group by operModule.keyword ",ClientInterface.HTTP_POST);//返回的文档封装对象类型
+
+		//获取总记录数
+		System.out.println(dsl);
+	}
 
     @Test
 	public void testCRUD() throws Exception {
