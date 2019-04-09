@@ -44,9 +44,19 @@ properties配置：如果需要采用properties配置，则将下面的两个文
 
 多es集群配置，修改spring booter项目的配置文件：eshelloword-spring-boot-starter\src\main\resources\config\application-multi-datasource.properties.example
 
-   
-## 2.3 参考文档
-https://my.oschina.net/bboss/blog/1556866
+## 快速集成和应用 
+
+非spring boot项目：
+
+https://esdoc.bbossgroups.com/#/common-project-with-bboss
+
+spring boot项目：
+
+https://esdoc.bbossgroups.com/#/spring-booter-with-bboss
+
+详细配置说明参考文档：
+
+https://esdoc.bbossgroups.com/#/development
 
 ## 开发交流群
 166471282
