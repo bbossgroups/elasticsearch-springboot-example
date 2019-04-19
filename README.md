@@ -24,6 +24,7 @@ Spring booter 1.x,2.x,+
  * 对应的配置文件为application-multi-datasource.properties文件
 
 # 运行demo
+src/test/java目录下面提供提供两个可以直接运行的的junit测试用例
 ## 单集群测试用例运行
 org.bboss.elasticsearchtest.springboot.BBossESStarterTestCase
 ## 多集群测试用例运行
