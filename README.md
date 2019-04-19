@@ -23,6 +23,11 @@ Spring booter 1.x,2.x,+
  * 两个集群通过 org.bboss.elasticsearchtest.springboot.MultiESSTartConfigurer加载
  * 对应的配置文件为application-multi-datasource.properties文件
 
+# 运行demo
+## 单集群测试用例运行
+org.bboss.elasticsearchtest.springboot.BBossESStarterTestCase
+## 多集群测试用例运行
+org.bboss.elasticsearchtest.springboot.MultiBBossESStartersTestCase
 
 ## 在spring booter项目中配置es参数
 yml配置(默认配置)
