@@ -29,6 +29,7 @@ spring:
         maxLineLength: -1
         maxTotal: 400
         retryTime: 1
+        retryInterval: 1000
         soKeepAlive: false
         soReuseAddress: false
         staleConnectionCheckEnabled: false

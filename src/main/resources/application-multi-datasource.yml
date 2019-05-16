@@ -30,6 +30,7 @@ spring:
           maxLineLength: -1
           maxTotal: 400
           retryTime: 1
+          retryInterval: 1000
           staleConnectionCheckEnabled: false
           timeoutConnection: 5000
           timeoutSocket: 5000

@@ -32,6 +32,7 @@ spring.elasticsearch.bboss.http.timeoutConnection = 5000
 spring.elasticsearch.bboss.http.timeoutSocket = 5000
 spring.elasticsearch.bboss.http.connectionRequestTimeout=5000
 spring.elasticsearch.bboss.http.retryTime = 1
+spring.elasticsearch.bboss.http.retryInterval = 1000
 spring.elasticsearch.bboss.http.maxLineLength = -1
 spring.elasticsearch.bboss.http.maxHeaderCount = 200
 spring.elasticsearch.bboss.http.maxTotal = 400
