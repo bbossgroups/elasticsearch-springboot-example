@@ -9,7 +9,6 @@ spring.elasticsearch.bboss.elasticsearch.rest.hostNames=127.0.0.1:9200
 #spring.elasticsearch.bboss.default.elasticsearch.rest.hostNames=https://10.180.211.27:9280,https://10.180.211.27:9281,https://10.180.211.27:9282
 spring.elasticsearch.bboss.elasticsearch.dateFormat=yyyy.MM.dd
 spring.elasticsearch.bboss.elasticsearch.timeZone=Asia/Shanghai
-spring.elasticsearch.bboss.elasticsearch.ttl=2d
 #在控制台输出脚本调试开关showTemplate,false关闭，true打开，同时log4j至少是info级别
 spring.elasticsearch.bboss.elasticsearch.showTemplate=true
 spring.elasticsearch.bboss.elasticsearch.discoverHost=false

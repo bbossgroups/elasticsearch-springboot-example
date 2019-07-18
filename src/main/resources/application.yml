@@ -16,7 +16,6 @@ spring:
         sliceScrollThreadCount: 100
         sliceScrollThreadQueue: 100
         timeZone: Asia/Shanghai
-        ttl: 2d
       http:
         connectionRequestTimeout: 5000
         customHttpRequestRetryHandler: org.frameworkset.spi.remote.http.ConnectionResetHttpRequestRetryHandler
