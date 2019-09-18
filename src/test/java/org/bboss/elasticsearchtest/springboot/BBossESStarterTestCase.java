@@ -31,7 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author  yinbp [122054810@qq.com]
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
+@SpringBootTest
 public class BBossESStarterTestCase {
 	@Autowired
 	private BBossESStarter bbossESStarter;

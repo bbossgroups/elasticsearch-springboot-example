@@ -22,6 +22,10 @@
                             "type": "date"
                              ## ,"format":"yyyy-MM-dd HH:mm:ss.SSS||yyyy-MM-dd'T'HH:mm:ss.SSS||yyyy-MM-dd HH:mm:ss||epoch_millis"
                         },
+                        "agentStarttimezh": {
+                            "type": "date",
+                             "format":"yyyy-MM-dd HH:mm:ss.SSS||yyyy-MM-dd'T'HH:mm:ss.SSS||yyyy-MM-dd HH:mm:ss||epoch_millis"
+                        },
                         "applicationName": {
                             "type": "text",
                             "fields": { ##dsl注释 定义精确查找的内部keyword字段

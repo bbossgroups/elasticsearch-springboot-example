@@ -22,7 +22,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 /**
- * 配置多个es集群
+ * 配置和加载多个es集群实例,在application.yml配置文件中定义了两个集群default和logs
+ * spring.elasticsearch.bboss.default
+ * spring.elasticsearch.bboss.logs
  */
 //@Configuration
 //@Profile("multi-datasource")
