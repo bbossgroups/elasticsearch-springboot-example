@@ -491,7 +491,7 @@
         #foreach($item in $softTypeMap.entrySet())
             #if($item.value)
                 #if($velocityCount > 0),#end
-                { "match": { "$item.key": #[softTypeMap[$item.key],serialJson=true] } }
+                { "match": { "$item.key": #[softTypeMap[$item.key]] } }
             #end
         #end
     ]]>
