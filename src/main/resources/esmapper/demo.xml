@@ -299,19 +299,11 @@
         #if($includes || $excludes) ## 只有指定了includes或者excludes才需要添加source filter
             "_source": {
                 #if($includes && $includes.size() > 0) ##设置includes filter
-                    "includes": [
-                        #foreach($include in $includes)
-                             #if($velocityCount > 0),#end "$include"
-                        #end
-                    ]
+                    "includes": #[includes,serialJson=true]
                     #if($excludes && $excludes.size() > 0),#end ##如果还存在排斥字段，则需要加一个逗号
                 #end
                 #if($excludes && $excludes.size() > 0)  ##设置excludes filter
-                    "excludes": [
-                        #foreach($exclude in $excludes)
-                             #if($velocityCount > 0),#end "$exclude"
-                        #end
-                    ]
+                    "excludes": #[excludes,serialJson=true]
                 #end
             },
         #end
@@ -321,11 +313,7 @@
                     #if($applicationNames && $applicationNames.size() > 0) ##只有传递了需要检索的应用名称集合，才需要添加下面的条件
                         {  ## 多值检索，查找多个应用名称对应的文档记录
                             "terms": {
-                                "applicationName.keyword":[
-                                    #foreach($applicationName in $applicationNames)
-                                         #if($velocityCount > 0),#end "$applicationName"
-                                    #end
-                                ]
+                                "applicationName.keyword":#[applicationNames,serialJson=true]
                             }
                         },
                     #end
@@ -431,18 +419,7 @@
               "last": #[last],
               "nick": #[nick],
               "goodsId": #[dynamicPriceTemplate->goodsId],
-              "rules":[
-                   #foreach($rule in $dynamicPriceTemplate.rules)
-                       #if($velocityCount > 0),#end
-                   {
-
-                        "ruleId": "$rule.ruleId",
-                        "ruleCount": $rule.ruleCount,
-                        "ruleExist":  $rule.ruleExist
-
-                    }
-                   #end
-              ]
+              "rules":#[dynamicPriceTemplate->rules,serialJson=true]
             }
         ]]>
     </property>
@@ -466,12 +443,7 @@
               "last": #[last],
               "nick": #[nick],
               "goodsId": #[dynamicPriceTemplate->goodsId],
-              "rules":[
-                   #foreach($rule in $dynamicPriceTemplate.rules)
-                       #[dynamicPriceTemplate->rules[$velocityCount],serialJson=true] ## 通过属性serialJson指示框架直接将对象序列化为json数据
-                        #if($velocityCount != ($dynamicPriceTemplate.rules.size() - 1)),#end
-                   #end
-              ]
+              "rules":#[dynamicPriceTemplate->rules,serialJson=true]
             }
         ]]>
     </property>
