@@ -1,4 +1,4 @@
-package org.bboss.elasticsearchtest.springboot.crud;
+package com.example.esbboss.entity;
 /**
  * Copyright 2008 biaoping.yin
  * <p>

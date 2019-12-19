@@ -14,6 +14,8 @@ package org.bboss.elasticsearchtest.springboot.crud;/*
  *  limitations under the License.
  */
 
+import com.example.esbboss.entity.Demo;
+import com.example.esbboss.entity.NewDemo;
 import org.bboss.elasticsearchtest.springboot.script.DynamicPriceTemplate;
 import org.bboss.elasticsearchtest.springboot.script.Rule;
 import org.frameworkset.elasticsearch.ElasticSearchException;

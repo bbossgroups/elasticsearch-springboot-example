@@ -31,16 +31,20 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+/**
+ * spring boot多es集群测试服务
+ */
 @Service
-public class DocumentCRUD {
+public class MultiES7DocumentCRUD {
 	@Autowired
-	private BBossESStarter bbossESStarter;
-	public DocumentCRUD(){
+	private BBossESStarter bbossESStarterDefault;
+	public MultiES7DocumentCRUD(){
 
 	}
 	public void testCreateIndice(){
 		//创建加载配置文件的客户端工具，单实例多线程安全
-		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo.xml");
+		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("esmapper/demo7.xml");
 		try {
 			//判读索引表demo是否存在，存在返回true，不存在返回false
 			boolean exist = clientUtil.existIndice("demo");
@@ -57,7 +61,7 @@ public class DocumentCRUD {
 			}
 			//创建索引表demo
 			clientUtil.createIndiceMapping("demo",//索引表名称
-					"createDemoIndice");//索引表mapping dsl脚本名称，在esmapper/demo.xml中定义createDemoIndice
+					"createDemoIndice");//索引表mapping dsl脚本名称，在esmapper/demo7.xml中定义createDemoIndice
 
 			String demoIndice = clientUtil.getIndice("demo");//获取最新建立的索引表结构
 			System.out.println(demoIndice);
@@ -69,9 +73,9 @@ public class DocumentCRUD {
 	}
 
 	public void updateDemoIndice(){
-		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo.xml");
-		//修改索引表demo中type为demo的mapping结构，增加email字段，对应的dsl片段updateDemoIndice定义在esmapper/demo.xml文件中
-		String response = clientUtil.executeHttp("demo/_mapping/demo","updateDemoIndice",ClientUtil.HTTP_PUT);
+		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("esmapper/demo7.xml");
+		//修改索引表demo中type为demo的mapping结构，增加email字段，对应的dsl片段updateDemoIndice定义在esmapper/demo7.xml文件中
+		String response = clientUtil.executeHttp("demo/_mapping","updateDemoIndice",ClientUtil.HTTP_PUT);
 		System.out.println(response);
 		//获取修改后的索引mapping结构
 		String mapping = clientUtil.getIndice("demo");
@@ -79,10 +83,10 @@ public class DocumentCRUD {
 	}
 	public void testCreateTempate() throws ParseException{
 
-		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo.xml");
+		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("esmapper/demo7.xml");
 		//创建模板
 		String response = clientUtil.createTempate("demotemplate_1",//模板名称
-				"demoTemplate");//模板对应的脚本名称，在esmapper/demo.xml中配置
+				"demoTemplate");//模板对应的脚本名称，在esmapper/demo7.xml中配置
 		System.out.println("createTempate-------------------------");
 		System.out.println(response);
 		//获取模板
@@ -100,7 +104,7 @@ public class DocumentCRUD {
 	}
 	public void testAddAndUpdateDocument() throws ParseException {
 		//创建创建/修改/获取/删除文档的客户端对象，单实例多线程安全
-		ClientInterface clientUtil = bbossESStarter.getRestClient();
+		ClientInterface clientUtil = bbossESStarterDefault.getRestClient();
 		//构建一个对象，日期类型，字符串类型属性演示
 		Demo demo = new Demo();
 		demo.setDemoId(2l);//文档id，唯一标识，@PrimaryKey注解标示,如果demoId已经存在做修改操作，否则做添加文档操作
@@ -112,7 +116,6 @@ public class DocumentCRUD {
 
 		//向固定index demo添加或者修改文档,如果demoId已经存在做修改操作，否则做添加文档操作，返回处理结果
 		String response = clientUtil.addDocument("demo",//索引表
-				"demo",//索引类型
 				demo);
 //		//强制刷新
 //		String response = clientUtil.addDocument("demo",//索引表
@@ -134,14 +137,12 @@ public class DocumentCRUD {
 		System.out.println(response);
 		//根据文档id获取文档对象，返回json报文字符串
 		response = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"2");//w
 
 		System.out.println("打印结果：getDocument-------------------------");
 		System.out.println(response);
 		//根据文档id获取文档对象，返回Demo对象
 		demo = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"2",//文档id
 				Demo.class);
 
@@ -155,11 +156,9 @@ public class DocumentCRUD {
 
 		//执行update操作
 		response = clientUtil.addDocument("demo",//索引表
-				"demo",//索引类型
 				demo);
 		//根据文档id获取修改后的文档对象，返回json报文字符串
 		response = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"2");//文档id
 		System.out.println("打印修改后的结果：getDocument-------------------------");
 		System.out.println(response);
@@ -171,13 +170,11 @@ public class DocumentCRUD {
 
 		//根据文档id获取修改后的文档对象，返回json报文字符串
 		response = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"2");//文档id
 		System.out.println("打印修改后的结果：getDocument-------------------------");
 		System.out.println(response);
 		//批量删除文档
 		clientUtil.deleteDocuments("demo",//索引表
-				"demo",//索引类型
 				new String[]{"2","3"});//批量删除文档ids
 
 	}
@@ -185,7 +182,7 @@ public class DocumentCRUD {
 
 	public void testBulkAddDocument() {
 		//创建批量创建文档的客户端对象，单实例多线程安全
-		ClientInterface clientUtil = bbossESStarter.getRestClient();
+		ClientInterface clientUtil = bbossESStarterDefault.getRestClient();
 		List<Demo> demos = new ArrayList<Demo>();
 		Demo demo = new Demo();//定义第一个对象
 		demo.setDemoId(2l);
@@ -233,53 +230,45 @@ public class DocumentCRUD {
 //		dynamicPriceTemplate.setRules(new ArrayList<Rule>());
 		//批量添加或者修改文档，将两个对象添加到索引表demo中
 		String response = clientUtil.addDocuments("demo",//索引表
-				"demo",//索引类型
 				demos,"refresh");//为了测试效果,启用强制刷新机制
 
 		System.out.println("addDocument-------------------------");
 		System.out.println(response);
 		//获取第一个文档
 		response = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"2");//w
 		System.out.println("getDocument-------------------------");
 		System.out.println(response);
 		//获取第二个文档
 		response = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"3"//文档id
 				 );
 		System.out.println(response);
 		//获取第二个文档
 		NewDemo newDemo = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"3",//文档id
 				NewDemo.class
 		);
 		//获取不存在的文档
 		response = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"-3"//文档id
 		);
 		System.out.println(response);
 
 		//获取不存在的文档
 		Demo demo1 = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"-3"//文档id
 		,Demo.class);
 
 		System.out.println(demo1);
 
 		//删除不存在的文档
-		response = clientUtil.deleteDocument("demo",//索引表
-				"demo",//索引类型
+		response = clientUtil.deleteDocumentNew("demo",//索引表
 				"-3"//文档id
 		);
 		System.out.println(response);
 		//更新不存在的文档
 		response = clientUtil.updateDocument("demo",//索引表
-				"demo",//索引类型
 				"-3",//文档id
 				demo
 		);
@@ -287,7 +276,7 @@ public class DocumentCRUD {
 	}
 	public void updateDocumentByScriptQuery(){
 		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
-		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo.xml");
+		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("esmapper/demo7.xml");
 		clientUtil.updateByQuery("demo/demo/2/_update","scriptDsl");
 		Map<String,Object> params = new HashMap<String,Object>();
 		//设置applicationName1和applicationName2两个变量的值
@@ -300,7 +289,7 @@ public class DocumentCRUD {
 	 */
 	public void testBulkAddDocuments() {
 		//创建批量创建文档的客户端对象，单实例多线程安全
-		ClientInterface clientUtil = bbossESStarter.getRestClient();
+		ClientInterface clientUtil = bbossESStarterDefault.getRestClient();
 		List<Demo> demos = new ArrayList<Demo>();
 		Demo demo = null;
 
@@ -322,7 +311,6 @@ public class DocumentCRUD {
 		long start = System.currentTimeMillis();
 		//批量添加或者修改文档，将两个对象添加到索引表demo中
 		String response = clientUtil.addDocuments("demo",//索引表
-				"demo",//索引类型
 				demos,"refresh=true");//为了测试效果,启用强制刷新机制
 		long end = System.currentTimeMillis();
 		System.out.println("BulkAdd 20002 Documents elapsed:"+(end - start)+"毫秒");
@@ -335,7 +323,6 @@ public class DocumentCRUD {
 		//获取第一个文档.
 		start = System.currentTimeMillis();
 		response = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"2");//w
 		end = System.currentTimeMillis();
 		System.out.println("getDocument Json elapsed:"+(end - start)+"毫秒");
@@ -344,7 +331,6 @@ public class DocumentCRUD {
 		//获取第二个文档
 		start = System.currentTimeMillis();
 		demo = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"3",//文档id
 				Demo.class);
 		end = System.currentTimeMillis();
@@ -357,7 +343,7 @@ public class DocumentCRUD {
 	 */
 	public void testBulkUpdateDocument() {
 		//创建批量修改文档的客户端对象，单实例多线程安全
-		ClientInterface clientUtil = bbossESStarter.getRestClient();
+		ClientInterface clientUtil = bbossESStarterDefault.getRestClient();
 //		List<ESIndice> indices = clientUtil.getIndexes();
 //		clientUtil.getIndexMappingFields(indice,type);
 		List<Demo> demos = new ArrayList<Demo>();
@@ -379,20 +365,17 @@ public class DocumentCRUD {
 
 		//批量修改文档
 		String response = clientUtil.addDocuments("demo",//索引表
-				"demo",//索引类型
 				demos);
 
 		System.out.println("addDateDocument-------------------------");
 		System.out.println(response);
 		//根据文档id获取修改后的文档json串
 		response = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"2");//w
 		System.out.println("getDocument-------------------------");
 		System.out.println(response);
 		//根据文档id获取修改后的文档对象
 		demo = clientUtil.getDocument("demo",//索引表
-				"demo",//索引类型
 				"3",//文档id
 				Demo.class);
 	}
@@ -404,7 +387,7 @@ public class DocumentCRUD {
 	 */
 	public void testSearch() throws ParseException {
 		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
-		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo.xml");
+		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("esmapper/demo7.xml");
 		//设定查询条件,通过map传递变量参数值,key对于dsl中的变量名称
 		//dsl中有四个变量
 		//        applicationName1
@@ -422,14 +405,14 @@ public class DocumentCRUD {
 		//执行查询，demo为索引表，_search为检索操作action
 		ESDatas<Demo> esDatas =  //ESDatas包含当前检索的记录集合，最多1000条记录，由dsl中的size属性指定
 				clientUtil.searchList("demo/_search",//demo为索引表，_search为检索操作action
-				"searchDatas",//esmapper/demo.xml中定义的dsl语句
+				"searchDatas",//esmapper/demo7.xml中定义的dsl语句
 				params,//变量参数
 				Demo.class);//返回的文档封装对象类型
 		//获取结果对象列表，最多返回1000条记录
 		List<Demo> demos = esDatas.getDatas();
 
 //		String json = clientUtil.executeRequest("demo/_search",//demo为索引表，_search为检索操作action
-//				"searchDatas",//esmapper/demo.xml中定义的dsl语句
+//				"searchDatas",//esmapper/demo7.xml中定义的dsl语句
 //				params);
 
 //		String json = com.frameworkset.util.SimpleStringUtil.object2json(demos);
@@ -444,7 +427,7 @@ public class DocumentCRUD {
 	 */
 	public void testSearchWithCustomEscape() throws ParseException {
 		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
-		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo.xml");
+		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("esmapper/demo7.xml");
 		//设定查询条件,通过map传递变量参数值,key对于dsl中的变量名称
 		//dsl中有四个变量
 		//        applicationName1
@@ -462,14 +445,14 @@ public class DocumentCRUD {
 		//执行查询，demo为索引表，_search为检索操作action
 		ESDatas<Demo> esDatas =  //ESDatas包含当前检索的记录集合，最多1000条记录，由dsl中的size属性指定
 				clientUtil.searchList("demo/_search",//demo为索引表，_search为检索操作action
-						"searchWithCustomEscape",//esmapper/demo.xml中定义的dsl语句
+						"searchWithCustomEscape",//esmapper/demo7.xml中定义的dsl语句
 						params,//变量参数
 						Demo.class);//返回的文档封装对象类型
 		//获取结果对象列表，最多返回1000条记录
 		List<Demo> demos = esDatas.getDatas();
 
 //		String json = clientUtil.executeRequest("demo/_search",//demo为索引表，_search为检索操作action
-//				"searchDatas",//esmapper/demo.xml中定义的dsl语句
+//				"searchDatas",//esmapper/demo7.xml中定义的dsl语句
 //				params);
 
 //		String json = com.frameworkset.util.SimpleStringUtil.object2json(demos);
@@ -481,7 +464,7 @@ public class DocumentCRUD {
 			//执行查询，demo为索引表，_search为检索操作action
 			esDatas =  //ESDatas包含当前检索的记录集合，最多1000条记录，由dsl中的size属性指定
 					clientUtil.searchList("demo/_search",//demo为索引表，_search为检索操作action
-							"searchWithCustomEscapeWithError",//esmapper/demo.xml中定义的dsl语句
+							"searchWithCustomEscapeWithError",//esmapper/demo7.xml中定义的dsl语句
 							params,//变量参数
 							Demo.class);//返回的文档封装对象类型
 			//获取结果对象列表，最多返回1000条记录
@@ -499,7 +482,7 @@ public class DocumentCRUD {
 	 */
 	public void testSearchSourceFilter() throws ParseException {
 		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
-		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
+		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo7.xml");
 		//设定查询条件,通过map传递变量参数值,key对于dsl中的变量名称
 		//dsl中有四个变量
 		//        applicationName1
@@ -534,7 +517,7 @@ public class DocumentCRUD {
 		//执行查询，demo为索引表，_search为检索操作action
 		ESDatas<Demo> esDatas =  //ESDatas包含当前检索的记录集合，最多1000条记录，由dsl中的size属性指定
 				clientUtil.searchList("demo/_search",//demo为索引表，_search为检索操作action
-						"searchSourceFilter",//esmapper/demo.xml中定义的dsl语句
+						"searchSourceFilter",//esmapper/demo7.xml中定义的dsl语句
 						params,//变量参数
 						Demo.class);//返回的文档封装对象类型
 		//获取总记录数
@@ -547,7 +530,7 @@ public class DocumentCRUD {
 
 		//以下是返回原始检索json报文检索代码
 //		String json = clientUtil.executeRequest("demo/_search",//demo为索引表，_search为检索操作action
-//				"searchSourceFilter",//esmapper/demo.xml中定义的dsl语句
+//				"searchSourceFilter",//esmapper/demo7.xml中定义的dsl语句
 //				params);
 
 //		String json = com.frameworkset.util.SimpleStringUtil.object2json(demos);
@@ -561,7 +544,7 @@ public class DocumentCRUD {
 	 */
 	public void testPagineSearch() throws ParseException {
 		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
-		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo.xml");
+		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("esmapper/demo7.xml");
 		//设定查询条件,通过map传递变量参数值,key对于dsl中的变量名称
 		//dsl中有四个变量
 		//        applicationName1
@@ -591,7 +574,7 @@ public class DocumentCRUD {
 			//执行查询，demo为索引表，_search为检索操作action
 			 esDatas =  //ESDatas包含当前检索的记录集合，最多1000条记录，由dsl中的size属性指定
 					clientUtil.searchList("demo/_search",//demo为索引表，_search为检索操作action
-							"searchPagineDatas",//esmapper/demo.xml中定义的dsl语句
+							"searchPagineDatas",//esmapper/demo7.xml中定义的dsl语句
 							params,//变量参数
 							Demo.class);//返回的文档封装对象类型
 			demos = esDatas.getDatas();//每页结果对象列表，最多返回1000条记录
@@ -601,7 +584,7 @@ public class DocumentCRUD {
 		}while(true);
 
 //		String json = clientUtil.executeRequest("demo/_search",//demo为索引表，_search为检索操作action
-//				"searchDatas",//esmapper/demo.xml中定义的dsl语句
+//				"searchDatas",//esmapper/demo7.xml中定义的dsl语句
 //				params);
 
 //		String json = com.frameworkset.util.SimpleStringUtil.object2json(demos);
@@ -615,7 +598,7 @@ public class DocumentCRUD {
 	 */
 	public void testSearchArray() throws ParseException {
 		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
-		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo.xml");
+		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("esmapper/demo7.xml");
 
 		//设定查询条件,通过map传递变量参数值,key对于dsl中的变量名称
 		//dsl中有四个变量
@@ -637,14 +620,14 @@ public class DocumentCRUD {
 		//执行查询，demo为索引表，_search为检索操作action
 		ESDatas<Demo> esDatas =  //ESDatas包含当前检索的记录集合，最多1000条记录，由dsl中的size属性指定
 				clientUtil.searchList("demo/_search",//demo为索引表，_search为检索操作action
-						"searchDatasArray",//esmapper/demo.xml中定义的dsl语句
+						"searchDatasArray",//esmapper/demo7.xml中定义的dsl语句
 						params,//变量参数
 						Demo.class);//返回的文档封装对象类型
 		//获取结果对象列表，最多返回1000条记录
 		List<Demo> demos = esDatas.getDatas();
 
 //		String json = clientUtil.executeRequest("demo/_search",//demo为索引表，_search为检索操作action
-//				"searchDatas",//esmapper/demo.xml中定义的dsl语句
+//				"searchDatas",//esmapper/demo7.xml中定义的dsl语句
 //				params);
 
 //		String json = com.frameworkset.util.SimpleStringUtil.object2json(demos);
@@ -654,7 +637,7 @@ public class DocumentCRUD {
 	}
 
 	public void testpons(){
-		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo.xml");
+		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("esmapper/demo7.xml");
 		Demo demo = new Demo();
 		demo.setDemoId(2l);
 		demo.setAgentStarttime(new Date());

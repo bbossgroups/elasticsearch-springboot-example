@@ -15,20 +15,18 @@ package com.example.esbboss.entity;/*
  */
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.frameworkset.orm.annotation.Column;
-import com.frameworkset.orm.annotation.ESId;
-import org.frameworkset.elasticsearch.entity.ESBaseData;
+import com.frameworkset.orm.annotation.ESMetaId;
 
 import java.util.Date;
 
 /**
  * 测试实体，可以从ESBaseData对象继承meta属性，检索时会将文档的一下meta属性设置到对象实例中
  */
-public class Demo extends ESBaseData {
+public class UUIDDemo {
+	@ESMetaId
+	private String did;
 	private Object dynamicPriceTemplate;
 	//设定文档标识字段
-	@ESId(readSet = true,persistent = false)
 	private Long demoId;
 	private String contentbody;
 	/**  当在mapping定义中指定了日期格式时，则需要指定以下两个注解,例如
@@ -42,17 +40,6 @@ public class Demo extends ESBaseData {
 	 */
 
 	protected Date agentStarttime;
-
-	public Date getAgentStarttimezh() {
-		return agentStarttimezh;
-	}
-
-	public void setAgentStarttimezh(Date agentStarttimezh) {
-		this.agentStarttimezh = agentStarttimezh;
-	}
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
-	@Column(dataformat = "yyyy-MM-dd HH:mm:ss.SSS")
-	protected Date agentStarttimezh;
 	private String applicationName;
 	private String orderId;
 	private int contrastStatus;
@@ -121,5 +108,13 @@ public class Demo extends ESBaseData {
 
 	public void setContrastStatus(int contrastStatus) {
 		this.contrastStatus = contrastStatus;
+	}
+
+	public String getDid() {
+		return did;
+	}
+
+	public void setDid(String did) {
+		this.did = did;
 	}
 }

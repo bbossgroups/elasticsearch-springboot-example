@@ -1,4 +1,4 @@
-package org.bboss.elasticsearchtest.springboot.crud;/*
+package com.example.esbboss.entity;/*
  *  Copyright 2008 biaoping.yin
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +16,7 @@ package org.bboss.elasticsearchtest.springboot.crud;/*
 
 
 import com.frameworkset.orm.annotation.ESId;
+import com.frameworkset.orm.annotation.ESIndex;
 import org.frameworkset.elasticsearch.entity.ESBaseData;
 
 import java.util.Date;
@@ -23,10 +24,12 @@ import java.util.Date;
 /**
  * 测试实体，可以从ESBaseData对象继承meta属性，检索时会将文档的一下meta属性设置到对象实例中
  */
-public class Demo extends ESBaseData {
+//@ESIndex(name="demowithesindex-{agentStarttime,yyyy.MM.dd}",type="demowithesindex")
+@ESIndex(name="demowithesindex-{dateformat=yyyy.MM.dd}")
+public class DemoWithES7Index extends ESBaseData {
 	private Object dynamicPriceTemplate;
 	//设定文档标识字段
-	@ESId
+	@ESId(readSet = true,persistent = false)
 	private Long demoId;
 	private String contentbody;
 	/**  当在mapping定义中指定了日期格式时，则需要指定以下两个注解,例如
@@ -41,6 +44,8 @@ public class Demo extends ESBaseData {
 
 	protected Date agentStarttime;
 	private String applicationName;
+	private String orderId;
+	private int contrastStatus;
 
 	public String getName() {
 		return name;
@@ -90,5 +95,21 @@ public class Demo extends ESBaseData {
 
 	public void setDynamicPriceTemplate(Object dynamicPriceTemplate) {
 		this.dynamicPriceTemplate = dynamicPriceTemplate;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
+	public int getContrastStatus() {
+		return contrastStatus;
+	}
+
+	public void setContrastStatus(int contrastStatus) {
+		this.contrastStatus = contrastStatus;
 	}
 }
