@@ -53,7 +53,28 @@ public class RestClient7Test {
 	private BBossESStarter bbossESStarter;
 	//DSL config file path
 	private String mappath = "esmapper/demo7.xml";
+	@Test
+	public void testException(){
+		ClientInterface clientUtil = bbossESStarter.getRestClient();
+		try {
+			clientUtil.getDocument("demo", (String) null);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 
+	@Test
+	public void testException1(){
+		ClientInterface clientUtil = bbossESStarter.getRestClient();
+
+		try {
+			clientUtil.getDocument("demo","");
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 	@Test
 	public void test(){
 		this.dropAndCreateAndGetIndice();
