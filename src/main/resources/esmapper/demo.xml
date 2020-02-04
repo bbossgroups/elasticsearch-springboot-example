@@ -36,6 +36,17 @@
                         },
                         "name": {
                             "type": "text"
+                        },
+                        "contrastStatus":{
+                            "type":"integer"
+                        },
+                        "orderId": {
+                            "type": "text",
+                            "fields": { ##dsl注释 定义精确查找的内部keyword字段
+                                "keyword": {
+                                    "type": "keyword"
+                                }
+                            }
                         }
                     }
                 }
@@ -139,7 +150,31 @@
                 }
             },
             ## 最多返回1000条记录
-            "size":1000
+            "size":1000,
+            "explain":true
+        }]]>
+    </property>
+    <property name="countDatas">
+        <![CDATA[{
+            "query": {
+                "bool": {
+                    "filter": [
+                        {  ## 多值检索，查找多个应用名称对应的文档记录
+                            "terms": {
+                                "applicationName.keyword": [#[applicationName1],#[applicationName2]]
+                            }
+                        },
+                        {   ## 时间范围检索，返回对应时间范围内的记录，接受long型的值
+                            "range": {
+                                "agentStarttime": {
+                                    "gte": #[startTime],##统计开始时间
+                                    "lt": #[endTime]  ##统计截止时间
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
         }]]>
     </property>
 
@@ -491,7 +526,7 @@
         #foreach($item in $softTypeMap.entrySet())
             #if($item.value)
                 #if($velocityCount > 0),#end
-                { "match": { "$item.key": #[softTypeMap[$item.key]] } }
+                { "match": { "$item.key": #[softTypeMap[$item.key],serialJson=true] } }
             #end
         #end
     ]]>
@@ -546,8 +581,60 @@
 
         ]]>
     </property>
+    <!--
+        简单的scroll query案例，复杂的条件修改query dsl即可
+        -->
+    <property name="scrollQuery">
+        <![CDATA[
+         {
+            "size":#[size],
+            "query": {"match_all": {}},
+            "sort": [
+                "_doc"
+            ]
+        }
+        ]]>
+    </property>
+    <!--
+        简单的slice scroll query案例，复杂的条件修改query dsl即可
+    -->
+    <property name="scrollSliceQuery">
+        <![CDATA[
+         {
+           "slice": {
+                "id": #[sliceId], ## 必须使用sliceId作为变量名称
+                "max": #[sliceMax] ## 必须使用sliceMax作为变量名称
+            },
+            "size":#[size],
+            "query": {"match_all": {}},
+            "sort": [
+                "_doc"
+            ]
+        }
+        ]]>
+    </property>
 
-
-
+    <property name="queryOrderList">
+        <![CDATA[{
+		     "from": 0,
+			"size": 200,
+			"query": {
+				"bool": {
+					"filter": [
+						{
+							"term": {
+								"orderId.keyword":  "NFZF15045871807281445364228"
+							}
+						},
+						{
+							"term": {
+								"contrastStatus": 2
+							}
+						}
+					]
+				}
+			}
+		}]]>
+    </property>
 
 </properties>
