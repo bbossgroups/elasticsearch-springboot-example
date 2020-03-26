@@ -18,7 +18,6 @@ package org.bboss.elasticsearchtest.springboot;
 
 import org.bboss.elasticsearchtest.springboot.crud.DocumentCRUD7;
 import org.frameworkset.elasticsearch.boot.BBossESStarter;
-import org.frameworkset.elasticsearch.client.ClientInterface;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +54,8 @@ public class BBossES7StarterTestCase {
 		exist =  bbossESStarter.getRestClient().existIndice("agentinfo");
 
     }
-
+/** should install plugin in elasticsearch to run follow method :
+ * https://github.com/NLPchina/elasticsearch-sql
 	@Test
 	public void testESSQLTranslate(){
 		ClientInterface clientUtil = bbossESStarter.getRestClient();
@@ -66,7 +66,7 @@ public class BBossES7StarterTestCase {
 		//获取总记录数
 		System.out.println(dsl);
 	}
-
+*/
     @Test
 	public void testCRUD() throws Exception {
 
