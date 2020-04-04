@@ -25,6 +25,7 @@ import org.frameworkset.elasticsearch.client.ClientInterface;
 import org.frameworkset.elasticsearch.client.ClientUtil;
 import org.frameworkset.elasticsearch.entity.ESDatas;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -38,7 +39,11 @@ import java.util.*;
 @Service
 public class MultiES7DocumentCRUD {
 	@Autowired
+	@Qualifier("bbossESStarterDefault")
 	private BBossESStarter bbossESStarterDefault;
+	@Autowired
+	@Qualifier("bbossESStarterLogs")
+	private BBossESStarter bbossESStarterLogs;
 	public MultiES7DocumentCRUD(){
 
 	}
