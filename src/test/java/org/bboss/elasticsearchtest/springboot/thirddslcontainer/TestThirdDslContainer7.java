@@ -20,6 +20,7 @@ import com.frameworkset.common.poolman.util.SQLUtil;
 import org.frameworkset.elasticsearch.boot.BBossESStarter;
 import org.frameworkset.elasticsearch.client.ClientInterface;
 import org.frameworkset.elasticsearch.template.*;
+import org.frameworkset.spi.DefaultApplicationContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -112,7 +113,7 @@ public class TestThirdDslContainer7 {
 		//将配置文件中的sql转存到数据库中
 		String dslpath = "esmapper/demo7.xml";
 	    final String namespace = "testnamespace7";//一个命名空间的dsl可以对应为一个ClientInterface实例
-		AOPTemplateContainerImpl aopTemplateContainer = new AOPTemplateContainerImpl(dslpath);
+		AOPTemplateContainerImpl aopTemplateContainer = new AOPTemplateContainerImpl(DefaultApplicationContext.getApplicationContext(dslpath));
 		int perKeyDSLStructionCacheSize = aopTemplateContainer.getPerKeyDSLStructionCacheSize();
 		boolean alwaysCacheDslStruction = aopTemplateContainer.isAlwaysCacheDslStruction();
 		List<TemplateMeta> templateMetaList = aopTemplateContainer.getTemplateMetas(namespace);//将demo.xml文件中配置的dsl转换为属于namespace命名空间的对象列表
