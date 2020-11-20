@@ -49,11 +49,11 @@ import java.util.Map;
 @SpringBootTest
 @ActiveProfiles("multi-datasource")
 public class MultiES7RestClientTest {
-	private Logger logger = LoggerFactory.getLogger(MultiES7RestClientTest.class);
+	private final Logger logger = LoggerFactory.getLogger(MultiES7RestClientTest.class);
 	@Autowired
 	private BBossESStarter bbossESStarterDefault;
 	//DSL config file path
-	private String mappath = "esmapper/demo7.xml";
+	private final String mappath = "esmapper/demo7.xml";
 	@Test
 	public void testMultiBBossESStarters() throws Exception {
 
@@ -85,7 +85,7 @@ public class MultiES7RestClientTest {
 	}
 	public void dropAndCreateAndGetIndice(){
 		//Create a client tool to load configuration files, single instance multithreaded security
-		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient(mappath);
+		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("default",mappath);
 		try {
 			//To determine whether the indice demo exists, it returns true if it exists and false if it does not
 			boolean exist = clientUtil.existIndice("demo");
