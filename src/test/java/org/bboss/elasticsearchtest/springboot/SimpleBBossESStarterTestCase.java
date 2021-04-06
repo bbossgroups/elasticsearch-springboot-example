@@ -18,11 +18,19 @@ package org.bboss.elasticsearchtest.springboot;
 
 import org.frameworkset.elasticsearch.boot.BBossESStarter;
 import org.frameworkset.elasticsearch.client.ClientInterface;
+import org.frameworkset.elasticsearch.entity.ESDatas;
+import org.frameworkset.elasticsearch.entity.MetaMap;
+import org.frameworkset.elasticsearch.entity.PitId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 单集群演示功能测试用例，spring boot配置项以spring.elasticsearch.bboss开头
@@ -32,6 +40,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SimpleBBossESStarterTestCase {
+	private static Logger logger = LoggerFactory.getLogger(SimpleBBossESStarterTestCase.class);
 	@Autowired
 	private BBossESStarter bbossESStarter;
 
@@ -63,6 +72,20 @@ public class SimpleBBossESStarterTestCase {
 
 		//获取总记录数
 		System.out.println(dsl);
+	}
+
+	@Test
+	public void testPitId(){
+		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo7.xml");
+		PitId pitId = clientUtil.requestPitId("dbdemo","1m");
+		logger.info("pitId.getId() {}",pitId.getId());
+		Map params = new HashMap();
+		params.put("pid",pitId.getId());
+		ESDatas<MetaMap> datas = clientUtil.searchList("/_search","queryPid", params,MetaMap.class);
+		logger.info("datas.getPitId() {}",datas.getPitId());
+		logger.info(clientUtil.deletePitId(pitId.getId()));
+
+		logger.info(clientUtil.deletePitId(datas.getPitId()));
 	}
 
 

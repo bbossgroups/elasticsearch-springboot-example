@@ -20,6 +20,8 @@ import org.frameworkset.elasticsearch.bulk.BulkInterceptor;
 import org.frameworkset.elasticsearch.bulk.BulkProcessor;
 import org.frameworkset.elasticsearch.bulk.BulkProcessorBuilder;
 import org.frameworkset.elasticsearch.client.ClientOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ import java.util.Map;
  */
 @Service
 public class TestBulkProcessor7x {
+	private static Logger logger = LoggerFactory.getLogger(TestBulkProcessor7x.class);
 
 	/**
 	 * BulkProcessor批处理组件，一般作为单实例使用，单实例多线程安全，可放心使用
@@ -59,21 +62,21 @@ public class TestBulkProcessor7x {
 //				.setElasticsearch("default")//指定Elasticsearch集群数据源名称，bboss可以支持多数据源
 				.addBulkInterceptor(new BulkInterceptor() {
 					public void beforeBulk(BulkCommand bulkCommand) {
-						System.out.println("beforeBulk");
+						logger.debug("beforeBulk");
 					}
 
 					public void afterBulk(BulkCommand bulkCommand, String result) {
-						System.out.println("afterBulk："+result);
+						if(logger.isDebugEnabled())
+							logger.debug("afterBulk："+result);
 //						System.out.println("totalSize:"+bulkCommand.getTotalSize());
 //						System.out.println("totalFailedSize:"+bulkCommand.getTotalFailedSize());
 					}
 
 					public void exceptionBulk(BulkCommand bulkCommand, Throwable exception) {
-						System.out.println("exceptionBulk：");
-						exception.printStackTrace();
+						logger.info("exceptionBulk：",exception);
 					}
 					public void errorBulk(BulkCommand bulkCommand, String result) {
-						System.out.println("errorBulk："+result);
+						logger.info("errorBulk："+result);
 					}
 				})
 				// https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
@@ -93,7 +96,7 @@ public class TestBulkProcessor7x {
 		bulkProcessor = bulkProcessorBuilder.build();//构建批处理作业组件
 	}
 	public void testBulkDatas(){
-		System.out.println("testBulkDatas");
+		logger.info("testBulkDatas");
 		ClientOptions clientOptions = new ClientOptions();
 		clientOptions.setIdField("id")//通过clientOptions指定map中的key为id的字段值作为文档_id，
 		          .setEsRetryOnConflict(1)
