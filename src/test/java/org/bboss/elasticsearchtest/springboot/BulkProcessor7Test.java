@@ -25,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static java.lang.Thread.sleep;
+
 /**
  * <p>Description: </p>
  * <p></p>
@@ -44,7 +46,16 @@ public class BulkProcessor7Test {
 	@Test
 	public void testBulkProcessor7x(){
 		testBulkProcessor7x.buildBulkProcessor();
-		testBulkProcessor7x.testBulkDatas();
+		do {
+
+			testBulkProcessor7x.testBulkDatas();
+			try {
+				sleep(1000l);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}while(true);
+
 
 	}
 }

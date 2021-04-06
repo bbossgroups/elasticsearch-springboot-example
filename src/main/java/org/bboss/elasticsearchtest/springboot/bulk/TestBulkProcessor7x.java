@@ -42,27 +42,18 @@ public class TestBulkProcessor7x {
 	 * BulkProcessor批处理组件，一般作为单实例使用，单实例多线程安全，可放心使用
 	 */
 	private BulkProcessor bulkProcessor;
-	public static void main(String[] args){
-		TestBulkProcessor7x testBulkProcessor = new TestBulkProcessor7x();
-		testBulkProcessor.buildBulkProcessor();
-		
-		testBulkProcessor.testBulkDatas();
-		
-		testBulkProcessor.shutdown(false);//调用shutDown停止方法后，BulkProcessor不会接收新的请求，但是会处理完所有已经进入bulk队列的数据
 
-
-	}
 	public void buildBulkProcessor(){
 		//定义BulkProcessor批处理组件构建器
 		BulkProcessorBuilder bulkProcessorBuilder = new BulkProcessorBuilder();
 		bulkProcessorBuilder.setBlockedWaitTimeout(0)//指定bulk数据缓冲队列已满时后续添加的bulk数据排队等待时间，如果超过指定的时候数据将被拒绝处理，单位：毫秒，默认为0，不拒绝并一直等待成功为止
 				.setBulkFailRetry(1)//如果处理失败，重试次数，暂时不起作用
-				.setBulkSizes(1000)//按批处理数据记录数
+				.setBulkSizes(50)//按批处理数据记录数
 				.setFlushInterval(5000)//强制bulk操作时间，单位毫秒，如果自上次bulk操作flushInterval毫秒后，数据量没有满足BulkSizes对应的记录数，但是有记录，那么强制进行bulk处理
 				
 				.setWarnMultsRejects(1000)//bulk处理操作被每被拒绝WarnMultsRejects次（1000次），在日志文件中输出拒绝告警信息
-				.setWorkThreads(20)//bulk处理工作线程数
-				.setWorkThreadQueue(20)//bulk处理工作线程池缓冲队列大小
+				.setWorkThreads(5)//bulk处理工作线程数
+				.setWorkThreadQueue(1)//bulk处理工作线程池缓冲队列大小
 				.setBulkProcessorName("test_bulkprocessor")//工作线程名称，实际名称为BulkProcessorName-+线程编号
 				.setBulkRejectMessage("Reject test bulkprocessor")//bulk处理操作被每被拒绝WarnMultsRejects次（1000次），在日志文件中输出拒绝告警信息提示前缀
 //				.setElasticsearch("default")//指定Elasticsearch集群数据源名称，bboss可以支持多数据源
@@ -138,7 +129,7 @@ public class TestBulkProcessor7x {
 
 		deleteclientOptions.setEsRetryOnConflict(1);
 		//.setPipeline("1")
-		bulkProcessor.deleteData("bulkdemo","1",deleteclientOptions);
+		bulkProcessor.deleteDataWithClientOptions("bulkdemo","1",deleteclientOptions);
 		List<Object> datas = new ArrayList<Object>();
 		for(int i = 6; i < 106; i ++) {
 			data = new HashMap<String,Object>();

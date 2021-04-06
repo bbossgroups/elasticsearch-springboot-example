@@ -209,8 +209,21 @@
         }]]>
     </property>
     <property name="queryPid"><![CDATA[{
-        "query": { "match": { "pid": #[pid] } }
-     }]]>
+              "size": 10000,
+              "query": {
+                "match" : {
+                    "logOperuser.keyword":"admin"
+                }
+              },
+              "pit": {
+                    "id":  #[pid],
+                    "keep_alive": "1m"
+              },
+              "sort": [
+                {"collecttime": "asc"}
+              ]
+            }
+     ]]>
     </property>
     <property name="searchWithCustomEscape">
         <![CDATA[{
