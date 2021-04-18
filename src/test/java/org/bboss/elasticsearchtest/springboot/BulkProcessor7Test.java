@@ -25,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+
 import static java.lang.Thread.sleep;
 
 /**
@@ -45,6 +47,7 @@ public class BulkProcessor7Test {
 	private TestBulkProcessor7x testBulkProcessor7x;
 	@Test
 	public void testBulkProcessor7x(){
+
 		testBulkProcessor7x.buildBulkProcessor();
 		do {
 

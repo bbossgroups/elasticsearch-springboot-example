@@ -41,6 +41,12 @@ import java.util.Map;
 public class TestBulkProcessor7x {
 	private static Logger logger = LoggerFactory.getLogger(TestBulkProcessor7x.class);
 
+	public static void main(String[] args){
+		ArrayList list = new ArrayList(2);
+		list.add(1);
+		list.add(2);
+	}
+
 	/**
 	 * BulkProcessor批处理组件，一般作为单实例使用，单实例多线程安全，可放心使用
 	 */
