@@ -79,13 +79,13 @@ public class MultiBBossES7StartersTestCase {
 		multiESDocumentCRUD.testAddAndUpdateDocument();
 		//批量添加文档
 		multiESDocumentCRUD.testBulkAddDocument();
-		//检索文档
-		multiESDocumentCRUD.testSearch();
+		//检索文档，测试指定数据源api，指定数据源default
+		multiESDocumentCRUD.testSearch("default");
 		//批量修改文档
 		multiESDocumentCRUD.testBulkUpdateDocument();
 
-		//检索批量修改后的文档
-		multiESDocumentCRUD.testSearch();
+		//检索批量修改后的文档，测试指定数据源api,指定数据源log
+		multiESDocumentCRUD.testSearch("logs");
 		//带list复杂参数的文档检索操作
 		multiESDocumentCRUD.testSearchArray();
 		//带from/size分页操作的文档检索操作

@@ -19,7 +19,7 @@ spring:
           sliceScrollThreadQueue: 100
           timeZone: Asia/Shanghai
         http:
-          connectionRequestTimeout: 5000
+          connectionRequestTimeout: 50000
           customHttpRequestRetryHandler: org.frameworkset.spi.remote.http.ConnectionResetHttpRequestRetryHandler
           defaultMaxPerRoute: 200
           hostnameVerifier: ''
@@ -29,11 +29,11 @@ spring:
           maxLineLength: -1
           maxTotal: 400
           retryTime: 1
-          retryInterval: 1000
+          retryInterval: 10000
           staleConnectionCheckEnabled: false
-          timeoutConnection: 5000
-          timeoutSocket: 5000
-          validateAfterInactivity: 2000
+          timeoutConnection: 50000
+          timeoutSocket: 50000
+          validateAfterInactivity: 200000
       dslfile:
         refreshInterval: -1
       logs:
@@ -44,7 +44,7 @@ spring:
           dateFormat: yyyy.MM.dd
           discoverHost: false
           rest:
-            hostNames: 192.168.137.1:9200
+            hostNames: 10.13.6.6:9200
           scrollBlockedWaitTimeout: 0
           scrollThreadCount: 200
           scrollThreadQueue: 200
@@ -54,7 +54,7 @@ spring:
           sliceScrollThreadQueue: 100
           timeZone: Asia/Shanghai
         http:
-          connectionRequestTimeout: 5000
+          connectionRequestTimeout: 50000
           customHttpRequestRetryHandler: org.frameworkset.spi.remote.http.ConnectionResetHttpRequestRetryHandler
           defaultMaxPerRoute: 200
           hostnameVerifier: ''
@@ -65,7 +65,7 @@ spring:
           maxTotal: 400
           retryTime: 1
           staleConnectionCheckEnabled: false
-          timeoutConnection: 5000
-          timeoutSocket: 5000
-          validateAfterInactivity: 2000
+          timeoutConnection: 50000
+          timeoutSocket: 50000
+          validateAfterInactivity: 200000
 

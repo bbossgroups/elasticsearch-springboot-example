@@ -15,9 +15,8 @@ spring:
         sliceScrollBlockedWaitTimeout: 0
         sliceScrollThreadCount: 100
         sliceScrollThreadQueue: 100
-        timeZone: Asia/Shanghai
       http:
-        connectionRequestTimeout: 5000
+        connectionRequestTimeout: 50000
         customHttpRequestRetryHandler: org.frameworkset.spi.remote.http.ConnectionResetHttpRequestRetryHandler
         defaultMaxPerRoute: 200
         hostnameVerifier:
@@ -33,9 +32,9 @@ spring:
         soReuseAddress: false
         staleConnectionCheckEnabled: false
         timeToLive: 3600000
-        timeoutConnection: 5000
-        timeoutSocket: 5000
-        validateAfterInactivity: 2000
+        timeoutConnection: 50000
+        timeoutSocket: 50000
+        validateAfterInactivity: 50000
       db:
         driver: com.mysql.jdbc.Driver
         name: test

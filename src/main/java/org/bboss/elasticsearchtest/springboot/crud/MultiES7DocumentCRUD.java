@@ -390,7 +390,7 @@ public class MultiES7DocumentCRUD {
 	 * 检索文档
 	 * @throws ParseException
 	 */
-	public void testSearch() throws ParseException {
+	public void testSearch(String datasourceName) throws ParseException {
 		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
 		ClientInterface clientUtil = bbossESStarterDefault.getConfigRestClient("esmapper/demo7.xml");
 		//设定查询条件,通过map传递变量参数值,key对于dsl中的变量名称
@@ -409,7 +409,8 @@ public class MultiES7DocumentCRUD {
 		params.put("endTime",new Date());
 		//执行查询，demo为索引表，_search为检索操作action
 		ESDatas<Demo> esDatas =  //ESDatas包含当前检索的记录集合，最多1000条记录，由dsl中的size属性指定
-				clientUtil.searchList("demo/_search",//demo为索引表，_search为检索操作action
+				clientUtil.searchListWithCluster(datasourceName,//指定操作的Elasticsearch集群数据源
+						"demo/_search",//demo为索引表，_search为检索操作action
 				"searchDatas",//esmapper/demo7.xml中定义的dsl语句
 				params,//变量参数
 				Demo.class);//返回的文档封装对象类型
