@@ -46,10 +46,10 @@ public class BBossES7StarterTestCase {
 
 //		System.out.println(response);
 		//判断索引类型是否存在，false表示不存在，正常返回true表示存在
-		boolean exist = bbossESStarter.getRestClient().existIndiceType("twitter","tweet");
+//		boolean exist = bbossESStarter.getRestClient().existIndiceType("twitter","_doc");
 
 		//判读索引是否存在，false表示不存在，正常返回true表示存在
-		exist =  bbossESStarter.getRestClient().existIndice("twitter");
+		boolean exist =  bbossESStarter.getRestClient().existIndice("twitter");
 
 		exist =  bbossESStarter.getRestClient().existIndice("agentinfo");
 
