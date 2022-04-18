@@ -51,6 +51,23 @@ public class DocumentCRUD7 {
 		documentCRUD.testBulkAddDocuments();
 
 	}
+
+	public void testBbossESStarter() throws Exception {
+//        System.out.println(bbossESStarter);
+
+		//验证环境,获取es状态
+//		String response = serviceApiUtil.restClient().executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
+
+//		System.out.println(response);
+		//判断索引类型是否存在，false表示不存在，正常返回true表示存在
+//		boolean exist = bbossESStarter.getRestClient().existIndiceType("twitter","_doc");
+
+		//判读索引是否存在，false表示不存在，正常返回true表示存在
+		boolean exist =  bbossESStarter.getRestClient().existIndice("twitter");
+
+		exist =  bbossESStarter.getRestClient().existIndice("agentinfo");
+
+	}
 	/**
 	 * 批量导入20002条数据
 	 */

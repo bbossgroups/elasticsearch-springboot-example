@@ -17,7 +17,6 @@ package org.bboss.elasticsearchtest.springboot;
 
 
 import org.bboss.elasticsearchtest.springboot.crud.DocumentCRUD7;
-import org.frameworkset.elasticsearch.boot.BBossESStarter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BBossES7StarterTestCase {
-	@Autowired
-	private BBossESStarter bbossESStarter;
+
 	@Autowired
 	DocumentCRUD7 documentCRUD;
 
@@ -49,9 +47,7 @@ public class BBossES7StarterTestCase {
 //		boolean exist = bbossESStarter.getRestClient().existIndiceType("twitter","_doc");
 
 		//判读索引是否存在，false表示不存在，正常返回true表示存在
-		boolean exist =  bbossESStarter.getRestClient().existIndice("twitter");
-
-		exist =  bbossESStarter.getRestClient().existIndice("agentinfo");
+		documentCRUD.testBbossESStarter();
 
     }
 /** should install plugin in elasticsearch to run follow method :

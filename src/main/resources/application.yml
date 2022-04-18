@@ -45,3 +45,5 @@ spring:
         validateSQL: select 1
       dslfile:
         refreshInterval: -1
+        ##dslMappingDir: D:/workdir/es
+      propertiesInterceptor: org.bboss.elasticsearchtest.springboot.TestPropertiesInterceptor
