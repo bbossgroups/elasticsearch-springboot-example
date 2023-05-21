@@ -208,23 +208,35 @@
             "size":1000
         }]]>
     </property>
-    <property name="queryPid"><![CDATA[{
-              "size": 10000,
+
+    <property name="queryPidSearchAfter"><![CDATA[{
+              "size": #[size],
               "query": {
                 "match" : {
-                    "logOperuser.keyword":"admin"
+                    "logOperuser.keyword":#[user]
                 }
               },
               "pit": {
                     "id":  #[pid],
                     "keep_alive": "1m"
               },
+              #if($_shard_doc)
+              "search_after": [
+                #[timestamp],
+                 #[_shard_doc]
+              ]
+              ,
+              #end
               "sort": [
-                {"collecttime": "asc"}
+                {"collecttime": "asc"},
+                {"_shard_doc": "desc"}
               ]
             }
      ]]>
     </property>
+
+
+
     <property name="searchWithCustomEscape">
         <![CDATA[{
             "query": {

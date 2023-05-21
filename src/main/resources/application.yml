@@ -11,7 +11,7 @@ spring:
         scrollBlockedWaitTimeout: 0
         scrollThreadCount: 200
         scrollThreadQueue: 200
-        showTemplate: false
+        showTemplate: true
         sliceScrollBlockedWaitTimeout: 0
         sliceScrollThreadCount: 100
         sliceScrollThreadQueue: 100

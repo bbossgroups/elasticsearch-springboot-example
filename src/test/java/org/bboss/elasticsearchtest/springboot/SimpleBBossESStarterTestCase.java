@@ -29,7 +29,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -74,19 +76,56 @@ public class SimpleBBossESStarterTestCase {
 		System.out.println(dsl);
 	}
 
-	@Test
-	public void testPitId(){
-		ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo7.xml");
-		PitId pitId = clientUtil.requestPitId("dbdemo","1m");
-		logger.info("pitId.getId() {}",pitId.getId());
-		Map params = new HashMap();
-		params.put("pid",pitId.getId());
-		ESDatas<MetaMap> datas = clientUtil.searchList("/_search","queryPid", params,MetaMap.class);
-		logger.info("datas.getPitId() {}",datas.getPitId());
-		logger.info(clientUtil.deletePitId(pitId.getId()));
 
-		logger.info(clientUtil.deletePitId(datas.getPitId()));
-	}
+    @Test
+    public void testPitIdSearchAfter(){
+        ClientInterface clientUtil = bbossESStarter.getConfigRestClient("esmapper/demo7.xml");
+        //申请pitid
+        PitId pitId = clientUtil.requestPitId("dbdemofull","1m");
+        logger.info("pitId.getId() {}",pitId.getId());
+        Map params = new HashMap();
+        params.put("size",100);
+        params.put("user","admin");
+        String pid = pitId.getId();
+
+        String prePid = null;
+        List<String> pids = new ArrayList<>();
+        pids.add(pid);
+        do {
+
+            params.put("pid",pid);
+            prePid = pid;
+            ESDatas<MetaMap> datas = clientUtil.searchList("/_search", "queryPidSearchAfter", params, MetaMap.class);
+            pid = datas.getPitId();
+            pids.add(pid);
+            List<MetaMap> metaMaps = datas.getDatas();
+            if(metaMaps != null && metaMaps.size() > 0 ){
+                MetaMap metaMap = metaMaps.get(metaMaps.size() - 1);
+                Object[] sort = metaMap.getSort();
+                params.put("timestamp",sort[0]);
+                params.put("_shard_doc",sort[1]);
+            }
+
+            if(metaMaps.size() < 100){
+                //达到最后一页，分页查询结束
+                break;
+            }
+            logger.info("datas.getPitId() {}", pid);
+           // logger.info(clientUtil.deletePitId(prePid));
+
+        }while (true);
+        String pre = null;
+        for(int i =0 ; i < pids.size(); i ++){
+            if(pre == null)
+                pre = pids.get(i);
+            else{
+                System.out.println("pre:"+pre + "\r\n" + "now:"+pids.get(i)  + "\r\n" + "now equals pre:"+pre.equals(pids.get(i)) );
+                pre = pids.get(i);
+            }
+            logger.info(clientUtil.deletePitId(pids.get(i)));
+        }
+
+    }
 
 
 }
