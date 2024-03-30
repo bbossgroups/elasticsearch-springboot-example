@@ -92,7 +92,11 @@
             <scope>test</scope>
             <version>4.13.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.30</version>
+        </dependency>
     </dependencies>
 
 </project>
