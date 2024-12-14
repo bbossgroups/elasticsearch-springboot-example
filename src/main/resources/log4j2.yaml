@@ -1,0 +1,26 @@
+Configuration:
+  status: WARN
+  Appenders:
+    Console:
+      name: Console
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    RollingFile:
+      name: RollingFile
+      fileName: eshelloword-spring-boot-starter.log
+      filePattern: "eshelloword-spring-boot-starter-%d{yyyy-MM-dd}-%i.log"
+      PatternLayout:
+        pattern: "[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %l - %m%n"
+      Policies:
+        TimeBasedTriggeringPolicy:
+        SizeBasedTriggeringPolicy:
+          size: 10 MB
+      DefaultRolloverStrategy:
+        max: 5
+  Loggers:
+    Root:
+      level: INFO
+      AppenderRef:
+        - ref: Console
+        - ref: RollingFile

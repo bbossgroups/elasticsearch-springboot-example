@@ -47,3 +47,6 @@ spring:
         refreshInterval: -1
         ##dslMappingDir: D:/workdir/es
       propertiesInterceptor: org.bboss.elasticsearchtest.springboot.TestPropertiesInterceptor
+  # 添加 log4j2 配置
+  logging:
+    config: classpath:log4j2.yaml     
