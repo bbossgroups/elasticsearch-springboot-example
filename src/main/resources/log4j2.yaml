@@ -13,7 +13,7 @@ Configuration:
       PatternLayout:
         pattern: "[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %l - %m%n"
       Policies:
-        TimeBasedTriggeringPolicy:
+#        TimeBasedTriggeringPolicy:
         SizeBasedTriggeringPolicy:
           size: 10 MB
       DefaultRolloverStrategy:

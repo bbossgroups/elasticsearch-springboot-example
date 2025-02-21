@@ -50,19 +50,10 @@ public class MultiBBossES7StartersTestCase {
     @Test
     public void testMultiBBossESStarters() throws Exception {
 
-		//验证环境,获取es状态
-//		String response = bbossESStarterDefault.getRestClient().executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
-//		System.out.println(response);
+ 
 
-
-		//判断索引类型是否存在，false表示不存在，正常返回true表示存在
-		boolean exist = bbossESStarterDefault.getRestClient().existIndiceType("twitter","tweet");
-		System.out.println("default twitter/tweet:"+exist);
-		//获取logs对应的Elasticsearch集群客户端，并进行existIndiceType操作
-		exist = bbossESStarterDefault.getRestClient("logs").existIndiceType("twitter","tweet");
-		System.out.println("logs twitter/tweet:"+exist);
 		//获取logs对应的Elasticsearch集群客户端，判读索引是否存在，false表示不存在，正常返回true表示存在
-		exist = bbossESStarterDefault.getRestClient("logs").existIndice("twitter");
+        boolean exist = bbossESStarterDefault.getRestClient().existIndice("twitter");
 		System.out.println("logs  twitter:"+exist);
 		//获取logs对应的Elasticsearch集群客户端，判断索引是否定义
 		exist = bbossESStarterDefault.getRestClient("logs").existIndice("agentinfo");
