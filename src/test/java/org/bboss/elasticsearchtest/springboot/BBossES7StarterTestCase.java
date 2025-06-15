@@ -37,6 +37,7 @@ public class BBossES7StarterTestCase {
 
     @Test
     public void testBbossESStarter() throws Exception {
+        org.springframework.util.Base64Utils base64Utils;
 //        System.out.println(bbossESStarter);
 
 		//验证环境,获取es状态
@@ -73,6 +74,7 @@ public class BBossES7StarterTestCase {
 		documentCRUD.testAddAndUpdateDocument();
 		//批量添加文档
 		documentCRUD.testBulkAddDocument();
+        documentCRUD.testLowlevelSearch();
 		//检索文档
 		documentCRUD.testSearch();
 		//批量修改文档
